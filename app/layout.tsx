@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, Sora } from "next/font/google";
-import "./globals.css";
+import "./global.css";
 
 const manrope = Manrope({
   variable: "--font-body",
