@@ -1,66 +1,64 @@
-import Image from "next/image";
 import styles from "./page.module.css";
+
+const plans = [
+  {
+    name: "Free",
+    credits: "100",
+    price: "$0",
+    description: "A lightweight option to test your first Stripe payment flow.",
+    cta: "Start Free",
+    featured: false,
+  },
+  {
+    name: "Silver",
+    credits: "1,000",
+    price: "$19",
+    description: "Balanced plan for regular usage and faster iteration.",
+    cta: "Choose Silver",
+    featured: true,
+  },
+  {
+    name: "Platinum",
+    credits: "100,000",
+    price: "$299",
+    description: "High-volume credits for heavy testing and enterprise demos.",
+    cta: "Go Platinum",
+    featured: false,
+  },
+] as const;
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
+    <main className={styles.page}>
+      <div className={styles.backdrop} aria-hidden="true" />
+      <section className={styles.container}>
+        <p className={styles.eyebrow}>Stripe UI Mock</p>
+        <h1 className={styles.title}>Pick the right credit plan</h1>
+        <p className={styles.subtitle}>
+          Frontend-only pricing view for quick Stripe payment testing.
+        </p>
+
+        <div className={styles.grid}>
+          {plans.map((plan, index) => (
+            <article
+              className={`${styles.card} ${plan.featured ? styles.featured : ""}`}
+              style={{ animationDelay: `${index * 140}ms` }}
+              key={plan.name}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              {plan.featured ? <span className={styles.badge}>Most Popular</span> : null}
+              <h2 className={styles.planName}>{plan.name}</h2>
+              <p className={styles.price}>{plan.price}</p>
+              <p className={styles.credits}>{plan.credits} credits</p>
+              <p className={styles.description}>{plan.description}</p>
+              <button type="button" className={styles.button}>
+                {plan.cta}
+              </button>
+            </article>
+          ))}
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        <p className={styles.note}>No backend connected in this demo.</p>
+      </section>
+    </main>
   );
 }
