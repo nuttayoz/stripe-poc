@@ -3,26 +3,26 @@ import styles from "./page.module.css";
 const plans = [
   {
     name: "Free",
-    credits: "100",
+    credit: "100 credit",
     price: "$0",
-    description: "A lightweight option to test your first Stripe payment flow.",
-    cta: "Start Free",
+    description: "Good for trying your first Stripe checkout flow.",
+    action: "Choose Free",
     featured: false,
   },
   {
     name: "Silver",
-    credits: "1,000",
+    credit: "1000 credit",
     price: "$19",
-    description: "Balanced plan for regular usage and faster iteration.",
-    cta: "Choose Silver",
+    description: "Balanced option for repeat testing and demos.",
+    action: "Choose Silver",
     featured: true,
   },
   {
     name: "Platinum",
-    credits: "100,000",
+    credit: "100000 credit",
     price: "$299",
-    description: "High-volume credits for heavy testing and enterprise demos.",
-    cta: "Go Platinum",
+    description: "Large credit volume for heavy usage scenarios.",
+    action: "Choose Platinum",
     featured: false,
   },
 ] as const;
@@ -30,34 +30,33 @@ const plans = [
 export default function Home() {
   return (
     <main className={styles.page}>
-      <div className={styles.backdrop} aria-hidden="true" />
       <section className={styles.container}>
-        <p className={styles.eyebrow}>Stripe UI Mock</p>
-        <h1 className={styles.title}>Pick the right credit plan</h1>
+        <p className={styles.kicker}>Stripe UI Only</p>
+        <h1 className={styles.title}>Choose your credit plan</h1>
         <p className={styles.subtitle}>
-          Frontend-only pricing view for quick Stripe payment testing.
+          Clean frontend pricing view for payment flow testing.
         </p>
 
         <div className={styles.grid}>
           {plans.map((plan, index) => (
             <article
               className={`${styles.card} ${plan.featured ? styles.featured : ""}`}
-              style={{ animationDelay: `${index * 140}ms` }}
               key={plan.name}
+              style={{ animationDelay: `${index * 110}ms` }}
             >
-              {plan.featured ? <span className={styles.badge}>Most Popular</span> : null}
-              <h2 className={styles.planName}>{plan.name}</h2>
+              {plan.featured ? <span className={styles.badge}>Popular</span> : null}
+              <h2 className={styles.name}>{plan.name}</h2>
               <p className={styles.price}>{plan.price}</p>
-              <p className={styles.credits}>{plan.credits} credits</p>
+              <p className={styles.credit}>{plan.credit}</p>
               <p className={styles.description}>{plan.description}</p>
               <button type="button" className={styles.button}>
-                {plan.cta}
+                {plan.action}
               </button>
             </article>
           ))}
         </div>
 
-        <p className={styles.note}>No backend connected in this demo.</p>
+        <p className={styles.note}>Frontend only, no backend integration.</p>
       </section>
     </main>
   );

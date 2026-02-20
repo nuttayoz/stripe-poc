@@ -1,6 +1,6 @@
 :root {
-  --surface: #fdfdfd;
-  --text: #1e2850;
+  --surface: #f8f9fd;
+  --text-primary: #172248;
 }
 
 html,
@@ -10,7 +10,7 @@ body {
 }
 
 body {
-  color: var(--text);
+  color: var(--text-primary);
   background: var(--surface);
   font-family: var(--font-body), sans-serif;
   -webkit-font-smoothing: antialiased;
