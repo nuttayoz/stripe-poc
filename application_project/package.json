@@ -12,7 +12,9 @@
     "start": "next start",
     "lint": "eslint",
     "stripe:setup:test": "node ./scripts/setup-stripe-test.js",
-    "stripe:pay:test": "node ./scripts/pay-stripe-test-transaction.js"
+    "stripe:pay:test": "node ./scripts/pay-stripe-test-transaction.js",
+    "stripe:customer:test": "node ./scripts/create-stripe-test-customer.js",
+    "stripe:subscribe:test": "node ./scripts/create-stripe-test-subscription.js"
   },
   "dependencies": {
     "dotenv": "^17.3.1",

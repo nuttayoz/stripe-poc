@@ -16,3 +16,16 @@ cd /Users/Nuttayos.Suv/Desktop/stripe-poc/backend_project
 cp .env.example .env
 cargo run
 ```
+
+## Endpoints
+
+- `GET /health`
+- `POST /api/stripe/checkout-session`
+
+### Checkout Request Example
+
+```bash
+curl -X POST http://localhost:4000/api/stripe/checkout-session \
+  -H "content-type: application/json" \
+  -d '{"plan":"silver"}'
+```

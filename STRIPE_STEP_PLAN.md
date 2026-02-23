@@ -15,9 +15,10 @@ This file is the execution plan for adding Stripe payments and credit top-ups to
 - Step 1: Completed
 - Step 2: Completed
 - Step 3: Core config module completed
+- Step 4: Checkout session API completed
 - Stripe test products/prices created and saved in local env
 - Env loading verified from app runtime
-- Next step: Step 4 (checkout session API)
+- Next step: Step 5 (webhook fulfillment API)
 
 ## Workspace Layout
 
@@ -77,10 +78,10 @@ Notes:
 
 ### 4. Checkout Session API
 
-- [ ] Create `POST /api/stripe/checkout-session`.
-- [ ] Validate requested plan server-side (`silver`, `platinum` only).
-- [ ] Create Stripe Checkout Session with success/cancel URLs.
-- [ ] Return session URL or session ID for frontend redirect.
+- [x] Create `POST /api/stripe/checkout-session`.
+- [x] Validate requested plan server-side (`silver`, `platinum` only).
+- [x] Create Stripe Checkout Session with success/cancel URLs.
+- [x] Return session URL or session ID for frontend redirect.
 
 ### 5. Webhook Fulfillment API
 

@@ -82,3 +82,23 @@ Optional payment method override:
 ```bash
 npm run stripe:pay:test -- --plan platinum --payment-method pm_card_visa
 ```
+
+## Test Customer + Subscription Scripts
+
+Run from frontend workspace:
+
+```bash
+cd /Users/Nuttayos.Suv/Desktop/stripe-poc/application_project
+```
+
+Create Stripe customer and write ID into `.env.example`:
+
+```bash
+npm run stripe:customer:test
+```
+
+Create Stripe subscription using that customer and write subscription snapshot into `.env.example`:
+
+```bash
+npm run stripe:subscribe:test -- --plan silver
+```

@@ -6,6 +6,7 @@ use std::fmt::{Display, Formatter};
 pub struct AppConfig {
     pub port: u16,
     pub stripe: StripeConfig,
+    pub checkout: CheckoutConfig,
 }
 
 #[derive(Debug, Clone)]
@@ -14,6 +15,12 @@ pub struct StripeConfig {
     pub silver_price_id: String,
     pub platinum_price_id: String,
     pub webhook_secret: Option<String>,
+}
+
+#[derive(Debug, Clone)]
+pub struct CheckoutConfig {
+    pub success_url: String,
+    pub cancel_url: String,
 }
 
 #[derive(Debug, Clone)]
@@ -55,7 +62,18 @@ impl AppConfig {
             webhook_secret: optional_env("STRIPE_WEBHOOK_SECRET"),
         };
 
-        Ok(Self { port, stripe })
+        let checkout = CheckoutConfig {
+            success_url: optional_env("CHECKOUT_SUCCESS_URL")
+                .unwrap_or_else(|| "http://localhost:3000/checkout/success".to_string()),
+            cancel_url: optional_env("CHECKOUT_CANCEL_URL")
+                .unwrap_or_else(|| "http://localhost:3000/checkout/cancel".to_string()),
+        };
+
+        Ok(Self {
+            port,
+            stripe,
+            checkout,
+        })
     }
 }
 
