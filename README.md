@@ -25,9 +25,7 @@ npm run dev
 
 ```bash
 cd /Users/Nuttayos.Suv/Desktop/stripe-poc/backend_project
-nvm use
-npm install
-npm run dev
+cargo run
 ```
 
 ## Stripe Test Setup (Frontend Script)

@@ -1,15 +1,15 @@
-# backend_project
+# backend_project (Rust)
 
-Backend server workspace for Stripe APIs (checkout session, webhook, credits).
+Minimal Rust backend core project.
 
-## Run
+## Structure
+
+- `Cargo.toml`
+- `src/main.rs`
+
+## Run (after installing Rust)
 
 ```bash
 cd /Users/Nuttayos.Suv/Desktop/stripe-poc/backend_project
-nvm use
-npm run dev
+cargo run
 ```
-
-## Current Endpoints
-
-- `GET /health`
