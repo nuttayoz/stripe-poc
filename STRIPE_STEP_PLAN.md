@@ -14,9 +14,10 @@ This file is the execution plan for adding Stripe payments and credit top-ups to
 
 - Step 1: Completed
 - Step 2: Completed
+- Step 3: Core config module completed
 - Stripe test products/prices created and saved in local env
 - Env loading verified from app runtime
-- Next step: Step 3 (config module + webhook secret later)
+- Next step: Step 4 (checkout session API)
 
 ## Workspace Layout
 
@@ -66,7 +67,8 @@ Current setup script path:
   - `STRIPE_PLATINUM_PRICE_ID`
 - [x] Verify app runtime can load env values.
 - [ ] Add `STRIPE_WEBHOOK_SECRET` (after webhook setup)
-- [ ] Add lightweight config module for plan-to-price mapping.
+- [x] Add lightweight config module for plan-to-price mapping.
+- [x] Add backend Rust env config skeleton (`backend_project/src/config.rs` + `.env.example`).
 
 Notes:
 
@@ -123,7 +125,6 @@ Notes:
 
 ## Execution Order
 
-1. Finish Step 3 config module
-2. Implement Steps 4 -> 8
-3. Validate with Step 9
-4. Finalize Step 10
+1. Implement Steps 4 -> 8
+2. Validate with Step 9
+3. Finalize Step 10
