@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Stripe POC Monorepo
 
-## Getting Started
+This repository now contains two projects:
 
-First, run the development server:
+- `/Users/Nuttayos.Suv/Desktop/stripe-poc/application_project` (Next.js frontend)
+- `/Users/Nuttayos.Suv/Desktop/stripe-poc/backend_project` (backend server workspace)
+
+Root keeps project-level docs and control files.
+
+## Prerequisites
+
+- Node `25.6.1` (or `^25`)
+- Stripe account in test mode
+
+## Run Frontend (`application_project`)
 
 ```bash
+cd /Users/Nuttayos.Suv/Desktop/stripe-poc/application_project
+nvm use
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run Backend (`backend_project`)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cd /Users/Nuttayos.Suv/Desktop/stripe-poc/backend_project
+cargo run
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Stripe Test Setup (Frontend Script)
 
-## Learn More
+1. Create env file in `application_project`:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+cd /Users/Nuttayos.Suv/Desktop/stripe-poc/application_project
+cp .env.example .env.local
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Set test keys in `.env.local`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+STRIPE_SECRET_KEY=sk_test_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+```
 
-## Deploy on Vercel
+3. Create/update Stripe test products and prices:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run stripe:setup:test
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The script prints:
+
+- `STRIPE_SILVER_PRICE_ID`
+- `STRIPE_PLATINUM_PRICE_ID`
+
+Add those IDs into `application_project/.env.local` and later `backend_project/.env`.
+
+## Manual Test Payment (No Webhook)
+
+Run from frontend workspace:
+
+```bash
+cd /Users/Nuttayos.Suv/Desktop/stripe-poc/application_project
+```
+
+Dry run (no charge):
+
+```bash
+npm run stripe:pay:test -- --plan silver --dry-run
+```
+
+Create a real Stripe **test mode** transaction:
+
+```bash
+npm run stripe:pay:test -- --plan silver
+```
+
+Optional payment method override:
+
+```bash
+npm run stripe:pay:test -- --plan platinum --payment-method pm_card_visa
+```
+
+## Test Customer + Subscription Scripts
+
+Run from frontend workspace:
+
+```bash
+cd /Users/Nuttayos.Suv/Desktop/stripe-poc/application_project
+```
+
+Create Stripe customer and write ID into `.env.example`:
+
+```bash
+npm run stripe:customer:test
+```
+
+Create Stripe subscription using that customer and write subscription snapshot into `.env.example`:
+
+```bash
+npm run stripe:subscribe:test -- --plan silver
+```

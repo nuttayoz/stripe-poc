@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Manrope, Space_Grotesk } from "next/font/google";
-import "./globals.css";
+import { Manrope, Sora } from "next/font/google";
+import "./global.css";
 
 const manrope = Manrope({
   variable: "--font-body",
   subsets: ["latin"],
 });
 
-const spaceGrotesk = Space_Grotesk({
+const sora = Sora({
   variable: "--font-heading",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Stripe Credit Plans",
-  description: "Simple Next.js pricing UI for Stripe plan testing",
+  title: "Stripe Pricing UI",
+  description: "Simple frontend pricing plans for Stripe payment testing",
 };
 
 export default function RootLayout({
@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} ${spaceGrotesk.variable}`}>
+      <body className={`${manrope.variable} ${sora.variable}`}>
         {children}
       </body>
     </html>
