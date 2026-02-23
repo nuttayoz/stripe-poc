@@ -1,61 +1,86 @@
-# Stripe POC (Next.js + UI Plans)
+# Stripe POC Monorepo
 
-This project is a Next.js app for testing Stripe plan purchase flows.
+This repository now contains two projects:
+
+- `/Users/Nuttayos.Suv/Desktop/stripe-poc/application_project` (Next.js frontend)
+- `/Users/Nuttayos.Suv/Desktop/stripe-poc/backend_project` (backend server workspace)
+
+Root keeps project-level docs and control files.
 
 ## Prerequisites
 
-- Node `25.6.1` (or Node `^25`)
+- Node `25.6.1` (or `^25`)
 - Stripe account in test mode
 
-## Local Run
+## Run Frontend (`application_project`)
 
 ```bash
+cd /Users/Nuttayos.Suv/Desktop/stripe-poc/application_project
 nvm use
 npm install
 npm run dev
 ```
 
-## Step 2: Stripe Test Setup
-
-1. Copy env template:
+## Run Backend (`backend_project`)
 
 ```bash
+cd /Users/Nuttayos.Suv/Desktop/stripe-poc/backend_project
+nvm use
+npm install
+npm run dev
+```
+
+## Stripe Test Setup (Frontend Script)
+
+1. Create env file in `application_project`:
+
+```bash
+cd /Users/Nuttayos.Suv/Desktop/stripe-poc/application_project
 cp .env.example .env.local
 ```
 
-2. Put your Stripe test secret key in `.env.local`:
+2. Set test keys in `.env.local`:
 
 ```bash
 STRIPE_SECRET_KEY=sk_test_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
 ```
 
-3. Optional: adjust price amount in minor unit (cents for `usd`):
-
-```bash
-STRIPE_CURRENCY=usd
-STRIPE_SILVER_AMOUNT=1900
-STRIPE_PLATINUM_AMOUNT=29900
-```
-
-4. Create/update Stripe test products and prices:
+3. Create/update Stripe test products and prices:
 
 ```bash
 npm run stripe:setup:test
 ```
 
-The script creates:
-
-- `Silver` product + price (1000 credits)
-- `Platinum` product + price (100000 credits)
-
-It then prints:
+The script prints:
 
 - `STRIPE_SILVER_PRICE_ID`
 - `STRIPE_PLATINUM_PRICE_ID`
 
-Add those IDs to `.env.local` for the next backend/API step.
+Add those IDs into `application_project/.env.local` and later `backend_project/.env`.
 
-## Notes
+## Manual Test Payment (No Webhook)
 
-- Free plan is internal only (no Stripe charge).
-- The setup script refuses to run with `sk_live_` keys.
+Run from frontend workspace:
+
+```bash
+cd /Users/Nuttayos.Suv/Desktop/stripe-poc/application_project
+```
+
+Dry run (no charge):
+
+```bash
+npm run stripe:pay:test -- --plan silver --dry-run
+```
+
+Create a real Stripe **test mode** transaction:
+
+```bash
+npm run stripe:pay:test -- --plan silver
+```
+
+Optional payment method override:
+
+```bash
+npm run stripe:pay:test -- --plan platinum --payment-method pm_card_visa
+```

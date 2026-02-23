@@ -10,6 +10,20 @@ This file is the execution plan for adding Stripe payments and credit top-ups to
   - Platinum: `100000` credits (Stripe payment)
 - UI + backend integration for Stripe checkout and credit fulfillment.
 
+## Current Status
+
+- Step 1: Completed
+- Step 2: Completed
+- Stripe test products/prices created and saved in local env
+- Env loading verified from app runtime
+- Next step: Step 3 (config module + webhook secret later)
+
+## Workspace Layout
+
+- Frontend: `/Users/Nuttayos.Suv/Desktop/stripe-poc/application_project`
+- Backend: `/Users/Nuttayos.Suv/Desktop/stripe-poc/backend_project`
+- Root docs/control: `/Users/Nuttayos.Suv/Desktop/stripe-poc`
+
 ## Step-by-Step Plan
 
 ### 1. Confirm Business Rules
@@ -34,15 +48,30 @@ Step 1 confirmed with defaults for this POC:
 - [x] Add test setup script to create/update Silver + Platinum Products/Prices.
 - [x] Run setup script with your real `sk_test_...` key and store resulting price IDs.
 
+Current test price IDs (local):
+
+- `STRIPE_SILVER_PRICE_ID=price_1T3sI3F6bJOUXc3rKebQT2Zi`
+- `STRIPE_PLATINUM_PRICE_ID=price_1T3sI4F6bJOUXc3rvrIUwze6`
+
+Current setup script path:
+
+- `application_project/scripts/setup-stripe-test.js`
+
 ### 3. Environment and Config
 
-- [ ] Add `.env.local` values:
+- [x] Add local env values (`.env` or `.env.local`):
   - `STRIPE_SECRET_KEY`
   - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
   - `STRIPE_SILVER_PRICE_ID`
   - `STRIPE_PLATINUM_PRICE_ID`
-  - `STRIPE_WEBHOOK_SECRET` (after webhook setup)
+- [x] Verify app runtime can load env values.
+- [ ] Add `STRIPE_WEBHOOK_SECRET` (after webhook setup)
 - [ ] Add lightweight config module for plan-to-price mapping.
+
+Notes:
+
+- Frontend env file: `application_project/.env.local`
+- Backend env file: `backend_project/.env`
 
 ### 4. Checkout Session API
 
@@ -94,8 +123,7 @@ Step 1 confirmed with defaults for this POC:
 
 ## Execution Order
 
-1. Finish Step 2 run with your real test key
-2. Complete Step 1 confirmations
-3. Implement Steps 4 -> 8
-4. Validate with Step 9
-5. Finalize Step 10
+1. Finish Step 3 config module
+2. Implement Steps 4 -> 8
+3. Validate with Step 9
+4. Finalize Step 10
