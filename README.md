@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Stripe POC (Next.js + UI Plans)
 
-## Getting Started
+This project is a Next.js app for testing Stripe plan purchase flows.
 
-First, run the development server:
+## Prerequisites
+
+- Node `25.6.1` (or Node `^25`)
+- Stripe account in test mode
+
+## Local Run
 
 ```bash
+nvm use
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Step 2: Stripe Test Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Copy env template:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env.local
+```
 
-## Learn More
+2. Put your Stripe test secret key in `.env.local`:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+STRIPE_SECRET_KEY=sk_test_...
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Optional: adjust price amount in minor unit (cents for `usd`):
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+STRIPE_CURRENCY=usd
+STRIPE_SILVER_AMOUNT=1900
+STRIPE_PLATINUM_AMOUNT=29900
+```
 
-## Deploy on Vercel
+4. Create/update Stripe test products and prices:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run stripe:setup:test
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The script creates:
+
+- `Silver` product + price (1000 credits)
+- `Platinum` product + price (100000 credits)
+
+It then prints:
+
+- `STRIPE_SILVER_PRICE_ID`
+- `STRIPE_PLATINUM_PRICE_ID`
+
+Add those IDs to `.env.local` for the next backend/API step.
+
+## Notes
+
+- Free plan is internal only (no Stripe charge).
+- The setup script refuses to run with `sk_live_` keys.
